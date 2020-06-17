@@ -5,9 +5,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">@Model.EBook.Title</h1>
+    <h1 class="display-4">@Model.Title</h1>
 
-    @* Info about the book here: Size etc. *@
+    <form asp-action="GetBook">
+        <label asp-for="Path"></label>
+        <input asp-for="Path" value="@Model.Path" placeholder=@Model.Path/>
+        
+        <input type="submit" value="Get book" class="btn btn-sm btn-success text-uppercase rounded-0"/>
+    </form>
 
-    
 </div>
