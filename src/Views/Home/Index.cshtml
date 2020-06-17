@@ -1,0 +1,15 @@
+﻿@model EBookPresenter.Models.EBookViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">All EBooks:</h1>
+
+    @foreach (var eBook in Model.EBooks)
+    {
+        <a asp-controller="SpecificEBook" asp-action="Index" asp-route-path="@eBook.Path">@eBook.Title</a>
+    }
+
+</div>
