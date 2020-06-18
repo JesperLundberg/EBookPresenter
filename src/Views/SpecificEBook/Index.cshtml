@@ -8,9 +8,8 @@
     <h1 class="display-4">@Model.Title</h1>
 
     <form asp-action="GetBook">
-        <label asp-for="Path"></label>
-        <input asp-for="Path" value="@Model.Path" placeholder=@Model.Path/>
-        
+        <input asp-for="Path" value="@Model.Path" placeholder=@Model.Path readonly="readonly" hidden="hidden"/>
+        <br/>
         <input type="submit" value="Get book" class="btn btn-sm btn-success text-uppercase rounded-0"/>
     </form>
 

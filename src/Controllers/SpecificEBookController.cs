@@ -1,13 +1,10 @@
-using System.IO;
 using EBookPresenter.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
 namespace EBookPresenter.Controllers
 {
     public class SpecificEBookController : Controller
     {
-        // GET
         public IActionResult Index(string path)
         {
             var viewModel = new SpecificEBookViewModel
@@ -21,7 +18,7 @@ namespace EBookPresenter.Controllers
         [HttpPost]
         public PhysicalFileResult GetBook(SpecificEBookViewModel eBookViewModel)
         {
-            var fileToReturn = new PhysicalFileResult(eBookViewModel.Path, "application/text")
+             var fileToReturn = new PhysicalFileResult(eBookViewModel.Path, "application/text")
             {
                 FileDownloadName = eBookViewModel.Title
             };
