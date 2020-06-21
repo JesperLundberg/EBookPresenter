@@ -26,8 +26,10 @@ namespace EBookPresenter.Repositories
             foreach (var file in allFiles)
             {
                 var fixedString = string.IsNullOrEmpty(file) ? "" : file.Replace('\\', '/');
+
+                var fileInfo = new FileInfo(fixedString);
                 
-                ebooks.Add(new EBook{Title = Path.GetFileName(file), Path = fixedString});
+                ebooks.Add(new EBook{Title = Path.GetFileName(file), Path = fixedString, CreatedDate = fileInfo.CreationTime});
             }
                 
             return ebooks.OrderBy(x => x.Title);
