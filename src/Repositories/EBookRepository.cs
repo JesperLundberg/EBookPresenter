@@ -44,7 +44,7 @@ namespace EBookPresenter.Repositories
 
             var directories = Directory.GetDirectories(folder);
 
-            var files = Directory.GetFiles(folder).ToList();
+            var files = Directory.GetFiles(folder).Where(x => x.EndsWith(".epub")).ToList();
             
             foreach (var directory in directories)
             {
