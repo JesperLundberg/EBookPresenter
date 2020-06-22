@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
+  <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <RootNamespace>EBookPresenter</RootNamespace>
-    </PropertyGroup>
+        <LangVersion>latest</LangVersion>
+  </PropertyGroup>
 
     <ItemGroup>
       <None Update="Dockerfile">
