@@ -5,6 +5,6 @@ namespace EBookPresenter.Repositories
 {
     public interface IEBookRepository
     {
-        IEnumerable<EBook> GetAllEbooks();
+        IEnumerable<EBook> GetAllEbooks(string sortOrder);
     }
 }

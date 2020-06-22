@@ -14,25 +14,36 @@ namespace EBookPresenter.Repositories
         {
             Configuration = configuration;
         }
-        
-        public IEnumerable<EBook> GetAllEbooks()
+
+        public IEnumerable<EBook> GetAllEbooks(string sortOrder)
         {
             var folderToRead = Configuration.GetSection("AppSettings").GetSection("FolderToRead").Value;
 
             var allFiles = GetEbooksRecursive(folderToRead);
-            
+
             var ebooks = new List<EBook>();
-            
+
             foreach (var file in allFiles)
             {
                 var fixedString = string.IsNullOrEmpty(file) ? "" : file.Replace('\\', '/');
 
                 var fileInfo = new FileInfo(fixedString);
-                
-                ebooks.Add(new EBook{Title = Path.GetFileName(file), Path = fixedString, CreatedDate = fileInfo.CreationTime});
+
+                ebooks.Add(new EBook
+                    {Title = Path.GetFileName(file), Path = fixedString, CreatedDate = fileInfo.CreationTime});
             }
-                
-            return ebooks.OrderBy(x => x.Title);
+
+            return OrderBooks(ebooks, sortOrder);
+        }
+
+        private static IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
+        {
+            return sortOrder switch
+            {
+                "creation" => ebooks.OrderByDescending(x => x.CreatedDate),
+                "alphabetic" => ebooks.OrderBy(x => x.Title),
+                _ => ebooks.OrderBy(x => x.Title)
+            };
         }
 
         private IEnumerable<string> GetEbooksRecursive(string folder)
@@ -45,12 +56,12 @@ namespace EBookPresenter.Repositories
             var directories = Directory.GetDirectories(folder);
 
             var files = Directory.GetFiles(folder).Where(x => x.EndsWith(".epub")).ToList();
-            
+
             foreach (var directory in directories)
             {
                 files.AddRange(GetEbooksRecursive(directory));
             }
-            
+
             return files;
         }
     }

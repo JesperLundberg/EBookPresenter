@@ -1,8 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using EBookPresenter.Models;
 using EBookPresenter.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventSource;
+using Microsoft.Net.Http.Headers;
 
 namespace EBookPresenter.Controllers
 {
@@ -19,9 +23,40 @@ namespace EBookPresenter.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new EBookViewModel {EBooks = EBookRepository.GetAllEbooks()};
+            //read cookie from Request object  
+            var sortOrder = Request.Cookies["SortOrder"];
+            
+            var viewModel = new EBookViewModel {EBooks = EBookRepository.GetAllEbooks(sortOrder), SortOrder = sortOrder};
 
             return View(viewModel);
+        }
+        
+        public void ToggleSortOrder()
+        {
+            var sortOrder = Request.Cookies["SortOrder"];
+
+            if (string.IsNullOrEmpty(sortOrder) || sortOrder.Equals("alphabetic"))
+            {
+                SetCookie("SortOrder", "creation", 365);
+            }
+            
+            RedirectToAction("Index");
+        }
+
+        private void SetCookie(string key, string value, int? expireTimeDays)
+        {
+            var option = new CookieOptions();  
+
+            if (expireTimeDays.HasValue)
+            {
+                option.Expires = DateTime.Now.AddDays(expireTimeDays.Value);
+            }
+            else
+            {
+                option.Expires = DateTime.Now.AddDays(10);
+            }
+            
+            Response.Cookies.Append(key, value, option);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
