@@ -7,7 +7,7 @@
   </PropertyGroup>
 
     <ItemGroup>
-      <None Update="Dockerfile">
+      <None Update="Dockerfile_only_runtime_container">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

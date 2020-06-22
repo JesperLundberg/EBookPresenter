@@ -1,10 +1,17 @@
-#Parent Image
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+# Use SDK to build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /source
 
-#The working dir of the app
-WORKDIR /app
+# copy csproj and restore as distinct layers
+COPY *.csproj .
+RUN dotnet restore
 
-# Copy from host to container
+# copy and publish app and libraries
 COPY . .
+RUN dotnet publish -c release -o /app --no-restore
 
+# final stage/image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "EBookPresenter.dll"]
