@@ -31,7 +31,7 @@ namespace EBookPresenter.Controllers
             return View(viewModel);
         }
         
-        public void ToggleSortOrder()
+        public RedirectToActionResult ToggleSortOrder()
         {
             var sortOrder = Request.Cookies["SortOrder"];
 
@@ -39,8 +39,12 @@ namespace EBookPresenter.Controllers
             {
                 SetCookie("SortOrder", "creation", 365);
             }
+            else
+            {
+                SetCookie("SortOrder", "alphabetic", 365);
+            }
             
-            RedirectToAction("Index");
+            return RedirectToAction("Index");
         }
 
         private void SetCookie(string key, string value, int? expireTimeDays)
