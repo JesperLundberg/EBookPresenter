@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EBookPresenter.Factories;
 using EBookPresenter.Models;
 using EBookPresenter.Wrappers;
 using Microsoft.Extensions.Configuration;
@@ -11,11 +12,13 @@ namespace EBookPresenter.Repositories
     {
         private IConfiguration Configuration { get; }
         private IFileSystem FileSystem { get; }
+        private IFileInfoFactory FileInfoFactory { get; }
 
-        public EBookRepository(IConfiguration configuration, IFileSystem fileSystem)
+        public EBookRepository(IConfiguration configuration, IFileSystem fileSystem, IFileInfoFactory fileInfoFactory)
         {
             Configuration = configuration;
             FileSystem = fileSystem;
+            FileInfoFactory = fileInfoFactory;
         }
 
         public IEnumerable<EBook> GetAllEbooks(string sortOrder)
@@ -28,9 +31,10 @@ namespace EBookPresenter.Repositories
 
             foreach (var file in allFiles)
             {
+                // Change from back slash to front slash as Linux uses the latter and Windows is agnostic
                 var fixedString = string.IsNullOrEmpty(file) ? "" : file.Replace('\\', '/');
 
-                var fileInfo = new FileInfo(fixedString);
+                var fileInfo = FileInfoFactory.Create(fixedString);
 
                 ebooks.Add(new EBook
                     {Title = Path.GetFileName(file), Path = fixedString, CreatedDate = fileInfo.CreationTime});

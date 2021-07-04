@@ -1,3 +1,4 @@
+using EBookPresenter.Factories;
 using EBookPresenter.Repositories;
 using EBookPresenter.Wrappers;
 using Microsoft.AspNetCore.Builder;
@@ -24,6 +25,7 @@ namespace src
 
             services.AddScoped<IEBookRepository, EBookRepository>();
             services.AddScoped<IFileSystem, FileSystem>();
+            services.AddScoped<IFileInfoFactory, IFileInfoFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
