@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EBookPresenter.Models;
+using EBookPresenter.Wrappers;
 using Microsoft.Extensions.Configuration;
 
 namespace EBookPresenter.Repositories
@@ -9,10 +10,12 @@ namespace EBookPresenter.Repositories
     public class EBookRepository : IEBookRepository
     {
         private IConfiguration Configuration { get; }
+        private IFileSystem FileSystem { get; }
 
-        public EBookRepository(IConfiguration configuration)
+        public EBookRepository(IConfiguration configuration, IFileSystem fileSystem)
         {
             Configuration = configuration;
+            FileSystem = fileSystem;
         }
 
         public IEnumerable<EBook> GetAllEbooks(string sortOrder)
@@ -53,9 +56,9 @@ namespace EBookPresenter.Repositories
                 return new List<string>();
             }
 
-            var directories = Directory.GetDirectories(folder);
+            var directories = FileSystem.GetDirectories(folder);
 
-            var files = Directory.GetFiles(folder).Where(x => x.EndsWith(".epub")).ToList();
+            var files = FileSystem.GetFiles(folder).Where(x => x.EndsWith(".epub")).ToList();
 
             foreach (var directory in directories)
             {
