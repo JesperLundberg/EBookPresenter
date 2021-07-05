@@ -4,7 +4,7 @@ namespace EBookPresenter.Factories
 {
     public class FileInfoFactory : IFileInfoFactory
     {
-        public FileInfoWrapper Create(string path)
+        public IFileInfoWrapper Create(string path)
         {
             return new FileInfoWrapper(path);
         }

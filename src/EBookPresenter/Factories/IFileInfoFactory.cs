@@ -4,6 +4,6 @@ namespace EBookPresenter.Factories
 {
     public interface IFileInfoFactory
     {
-        FileInfoWrapper Create(string path);
+        IFileInfoWrapper Create(string path);
     }
 }

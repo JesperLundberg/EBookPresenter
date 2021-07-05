@@ -10,21 +10,17 @@ namespace EBookPresenter.Repositories
 {
     public class EBookRepository : IEBookRepository
     {
-        private IConfiguration Configuration { get; }
         private IFileSystem FileSystem { get; }
         private IFileInfoFactory FileInfoFactory { get; }
 
-        public EBookRepository(IConfiguration configuration, IFileSystem fileSystem, IFileInfoFactory fileInfoFactory)
+        public EBookRepository(IFileSystem fileSystem, IFileInfoFactory fileInfoFactory)
         {
-            Configuration = configuration;
             FileSystem = fileSystem;
             FileInfoFactory = fileInfoFactory;
         }
 
-        public IEnumerable<EBook> GetAllEbooks(string sortOrder)
+        public IEnumerable<EBook> GetAllEbooks(string folderToRead, string sortOrder)
         {
-            var folderToRead = Configuration.GetSection("AppSettings").GetSection("FolderToRead").Value;
-
             var allFiles = GetEbooksRecursive(folderToRead);
 
             var ebooks = new List<EBook>();
@@ -43,7 +39,7 @@ namespace EBookPresenter.Repositories
             return OrderBooks(ebooks, sortOrder);
         }
 
-        private static IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
+        public static IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
         {
             return sortOrder switch
             {
@@ -53,7 +49,7 @@ namespace EBookPresenter.Repositories
             };
         }
 
-        private IEnumerable<string> GetEbooksRecursive(string folder)
+        public IEnumerable<string> GetEbooksRecursive(string folder)
         {
             if (string.IsNullOrEmpty(folder))
             {

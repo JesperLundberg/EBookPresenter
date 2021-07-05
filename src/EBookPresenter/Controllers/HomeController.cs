@@ -4,6 +4,7 @@ using EBookPresenter.Models;
 using EBookPresenter.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.EventSource;
 using Microsoft.Net.Http.Headers;
@@ -14,9 +15,11 @@ namespace EBookPresenter.Controllers
     {
         private ILogger<HomeController> Logger { get; }
         private IEBookRepository EBookRepository { get; }
+        private IConfiguration Configuration { get; }
 
-        public HomeController(ILogger<HomeController> logger, IEBookRepository eBookRepository)
+        public HomeController(IConfiguration configuration ,ILogger<HomeController> logger, IEBookRepository eBookRepository)
         {
+            Configuration = configuration;
             Logger = logger;
             EBookRepository = eBookRepository;
         }
@@ -25,12 +28,15 @@ namespace EBookPresenter.Controllers
         {
             //read cookie from Request object  
             var sortOrder = Request.Cookies["SortOrder"];
-            
-            var viewModel = new EBookViewModel {EBooks = EBookRepository.GetAllEbooks(sortOrder), SortOrder = sortOrder};
+
+            var folderToRead = Configuration.GetSection("AppSettings").GetSection("FolderToRead").Value;
+
+            var viewModel = new EBookViewModel
+                {EBooks = EBookRepository.GetAllEbooks(folderToRead, sortOrder), SortOrder = sortOrder};
 
             return View(viewModel);
         }
-        
+
         public RedirectToActionResult ToggleSortOrder()
         {
             var sortOrder = Request.Cookies["SortOrder"];
@@ -43,13 +49,13 @@ namespace EBookPresenter.Controllers
             {
                 SetCookie("SortOrder", "alphabetic", 365);
             }
-            
+
             return RedirectToAction("Index");
         }
 
         private void SetCookie(string key, string value, int? expireTimeDays)
         {
-            var option = new CookieOptions();  
+            var option = new CookieOptions();
 
             if (expireTimeDays.HasValue)
             {
@@ -59,7 +65,7 @@ namespace EBookPresenter.Controllers
             {
                 option.Expires = DateTime.Now.AddDays(10);
             }
-            
+
             Response.Cookies.Append(key, value, option);
         }
 
