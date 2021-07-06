@@ -39,7 +39,7 @@ namespace EBookPresenter.Repositories
             return OrderBooks(ebooks, sortOrder);
         }
 
-        public static IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
+        public IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
         {
             return sortOrder switch
             {
