@@ -27,7 +27,7 @@ namespace EBookPresenter.Tests
         }
 
         [Test]
-        public void EBookRepository_OrderBooks_Alphabetic_Returns_Books_Ordered_By_Alphabetic_Order()
+        public void EBookRepository_OrderBooks_Alphabetic_Returns_Books_Ordered_By_Alphabetic_Order_Ascending()
         {
             var ebookRepository = new EBookRepository(new FileSystemFake(), new FileInfoFactoryFake());
 
@@ -44,6 +44,20 @@ namespace EBookPresenter.Tests
             var result = ebookRepository.OrderBooks(unorderedBookList, "alphabetic");
             
             CollectionAssert.AreEqual(expected, result, new TitleComparer());
+        }
+        
+        [Test]
+        public void EBookRepository_OrderBooks_Created_Returns_Books_Ordered_By_Creation_Date_Ascending()
+        {
+            var ebookRepository = new EBookRepository(new FileSystemFake(), new FileInfoFactoryFake());
+
+            var unorderedBookList = CreateBookObjects.GetUnorderedEBookList().ToList();
+
+            var expected = unorderedBookList.OrderByDescending(x => x.CreatedDate);
+            
+            var result = ebookRepository.OrderBooks(unorderedBookList, "creation");
+            
+            CollectionAssert.AreEqual(expected, result, new CreationDateComparer());
         }
     }
 }
