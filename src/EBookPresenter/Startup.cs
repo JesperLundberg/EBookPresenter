@@ -1,13 +1,15 @@
+using EBookPresenter.Context;
 using EBookPresenter.Factories;
 using EBookPresenter.Repositories;
 using EBookPresenter.Wrappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace src
+namespace EBookPresenter
 {
     public class Startup
     {
@@ -21,6 +23,9 @@ namespace src
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<EBookContext>(configuration =>
+                configuration.UseSqlite(Configuration.GetSection("ConnectionString").Value));
+            
             services.AddControllersWithViews();
 
             services.AddScoped<IEBookRepository, EBookRepository>();
