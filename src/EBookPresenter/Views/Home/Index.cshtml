@@ -7,7 +7,7 @@
 <div class="text-left">
     <h1 class="display-4">All EBooks:</h1>
 
-    <div class="text-right"><a asp-controller="Home" asp-action="ToggleSortOrder">@(string.IsNullOrEmpty(Model.SortOrder) ? "alphabetic" : Model.SortOrder)</a></div>
+    <div class="float-right"><a asp-controller="Home" asp-action="ToggleSortOrder">@(string.IsNullOrEmpty(Model.SortOrder) ? "alphabetic" : Model.SortOrder)</a></div>
     
     @foreach (var eBook in Model.EBooks)
     {
