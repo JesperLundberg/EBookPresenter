@@ -33,8 +33,10 @@ def build_docker():
 if not folder_exists("build/"):
     create_folder("build/")
 else:
+	# Clean folder to make sure there are no left overs
 	clean_build_folder("build/")
 	create_folder("build/")
 
 copy_source_code()
+
 build_docker()
