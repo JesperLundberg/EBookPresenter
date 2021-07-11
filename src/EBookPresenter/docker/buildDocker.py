@@ -2,11 +2,7 @@
 
 import os
 import subprocess
-
-def get_value(filename):
-	with open(filename) as f:
-	    content = f.readlines()
-	return content[0]
+import dockerUtilities
 
 def create_folder(path_to_create):
     os.makedirs(path_to_create)
@@ -30,8 +26,8 @@ def copy_source_code():
 
 def build_docker():
     print("Building docker file")
-    command = "docker build -t " + get_value("name") + ":" +\
-    get_value("release") + " build/"
+    command = "docker build -t " + dockerUtilities.get_value("name") + ":" +\
+    dockerUtilities.get_value("release") + " build/"
     os.system(command)
 
 # Actual script
