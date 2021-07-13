@@ -5,17 +5,7 @@ import os
 from dockerUtilities import get_value
 from dockerUtilities import image_exist
 from dockerUtilities import container_exist
-
-
-def remove_container(container_name):
-	command = "docker stop " + container_name
-	result = os.system(command)
-
-	if result == 0:
-		command = "docker rm -f " + container_name
-		result = os.system(command)
-
-	return result
+from dockerUtilities import remove_container
 
 def remove_image(image_name):
 	command = "docker rmi " + image_name

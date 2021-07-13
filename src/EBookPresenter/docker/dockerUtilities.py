@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import subprocess
+import os
 
 def get_value(filename):
     with open(filename) as f:
@@ -24,3 +25,14 @@ def image_exist(image_name):
         return False
     else:
         return True
+
+def remove_container(container_name):
+	command = "docker stop " + container_name
+	result = os.system(command)
+
+	# If container stopped successfully, remove it
+	if result == 0:
+		command = "docker rm -f " + container_name
+		result = os.system(command)
+
+	return result
