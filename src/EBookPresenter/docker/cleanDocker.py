@@ -3,24 +3,9 @@
 import subprocess
 import os
 from dockerUtilities import get_value
+from dockerUtilities import image_exist
+from dockerUtilities import container_exist
 
-def does_container_exist(container_name):
-	command = ['docker', 'ps', '--filter', 'name=' + container_name, '-q']
-	result = subprocess.run(command, stdout=subprocess.PIPE)
-	
-	if not result.stdout:
-		return False
-	else:
-		return True
-
-def does_image_exist(image_name):
-	command = ['docker', 'images', image_name, '-q']
-	result = subprocess.run(command, stdout=subprocess.PIPE)
-
-	if not result.stdout:
-		return False
-	else:
-		return True
 
 def remove_container(container_name):
 	command = "docker stop " + container_name
@@ -32,7 +17,14 @@ def remove_container(container_name):
 
 	return result
 
-print(does_container_exist(get_value("name")))
-print(does_image_exist(get_value("name") + ":" + get_value("release")))
+def remove_image(image_name):
+	command = "docker rmi " + image_name
+	result = os.system(command)
 
-#print(remove_container(get_value("name")))
+	return result
+
+if(container_exist(get_value("name"))):
+	remove_container(get_value("name"))
+
+if(image_exist(get_value("name") + ":" + get_value("release"))):
+	remove_image(get_value("name") + ":" + get_value("release"))
