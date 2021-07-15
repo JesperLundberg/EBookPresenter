@@ -17,4 +17,4 @@ def run_docker(container_name, release, path_to_bind):
 if(container_exist(get_value("name"))):
     remove_container(get_value("name"))
 
-run_docker(get_value("name"), get_value("release"), "/mnt/c/temp/")
+run_docker(get_value("name"), get_value("release"), get_value("mount"))
