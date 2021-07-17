@@ -19,6 +19,6 @@ cleanDocker.py removes container and image.
 
 There are 3 config files.
 
-'name' describes the name of the image/container (e.g. ebookpresenter).
-'release' describes the release of the image/container (e.g. 0.0.1-rc1).
-'mount' describes the path on the host to map to the internal /books/ in the container (e.g. /mnt/c/temp).
+`name` describes the name of the image/container (e.g. ebookpresenter).
+`release` describes the release of the image/container (e.g. 0.0.1-rc1).
+`mount` describes the path on the host to map to the internal /books/ in the container (e.g. /mnt/c/temp).
