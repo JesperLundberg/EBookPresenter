@@ -6,7 +6,7 @@ import os
 def get_value(filename):
     with open(filename) as f:
         content = f.readlines()
-    return content[0]
+    return content[0].strip()
 
 def container_exist(container_name):
     command = ['docker', 'ps', '--filter', 'name=' + container_name, '-q']
