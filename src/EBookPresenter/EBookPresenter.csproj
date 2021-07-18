@@ -10,6 +10,40 @@
       <None Update="Dockerfile_only_runtime_container">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Remove="docker\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="docker\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="docker\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="docker\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="docker\build\Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\SpecificEBook\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\Views\_ViewStart.cshtml" />
+      <_ContentIncludedByDefault Remove="docker\build\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="docker\build\appsettings.json" />
+      <_ContentIncludedByDefault Remove="docker\build\bin\Debug\netcoreapp5.0\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="docker\build\bin\Debug\netcoreapp5.0\appsettings.json" />
+      <_ContentIncludedByDefault Remove="docker\build\bin\Debug\netcoreapp5.0\EBookPresenter.deps.json" />
+      <_ContentIncludedByDefault Remove="docker\build\bin\Debug\netcoreapp5.0\EBookPresenter.runtimeconfig.dev.json" />
+      <_ContentIncludedByDefault Remove="docker\build\bin\Debug\netcoreapp5.0\EBookPresenter.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="docker\build\obj\EBookPresenter.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="docker\build\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="docker\build\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="docker\build\Properties\launchSettings.json" />
     </ItemGroup>
 
 
