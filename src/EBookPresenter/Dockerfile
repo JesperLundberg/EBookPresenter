@@ -7,7 +7,8 @@ COPY . .
 RUN dotnet publish -c release -o /app
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine
+
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "EBookPresenter.dll"]
