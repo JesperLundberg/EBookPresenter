@@ -1,4 +1,4 @@
-﻿@model EBookPresenter.Models.EBookViewModel
+﻿@model EBookViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,11 +7,15 @@
 <div class="text-left">
     <h1 class="display-4">All EBooks:</h1>
 
-    <div class="text-right"><a asp-controller="Home" asp-action="ToggleSortOrder">@(string.IsNullOrEmpty(Model.SortOrder) ? "alphabetic" : Model.SortOrder)</a></div>
-    
+    <div class="text-right">
+        <a asp-controller="Home" asp-action="ToggleSortOrder">@(string.IsNullOrEmpty(Model.SortOrder) ? "alphabetic" : Model.SortOrder)</a>
+    </div>
+
     @foreach (var eBook in Model.EBooks)
     {
-        @eBook.CreatedDate.ToString("yyyy-MM-dd") <a asp-controller="SpecificEBook" asp-action="Index" asp-route-path="@eBook.Path">@eBook.Title</a><br/>
+        @eBook.CreatedDate.ToString("yyyy-MM-dd")
+        <a asp-controller="SpecificEBook" asp-action="Index" asp-route-path="@eBook.Path">@eBook.Title</a>
+        <br/>
     }
 
 </div>

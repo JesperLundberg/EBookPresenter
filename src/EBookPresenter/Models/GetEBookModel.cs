@@ -1,7 +1,6 @@
-namespace EBookPresenter.Models
+namespace EBookPresenter.Models;
+
+public class GetEBookModel
 {
-    public class GetEBookModel
-    {
-        public string Path { get; set; }
-    }
+    public string Path { get; set; }
 }

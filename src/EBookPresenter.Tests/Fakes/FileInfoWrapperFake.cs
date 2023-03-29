@@ -1,10 +1,10 @@
 using System;
+
 using EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Tests.Fakes
+namespace EBookPresenter.Tests.Fakes;
+
+public class FileInfoWrapperFake : IFileInfoWrapper
 {
-    public class FileInfoWrapperFake : IFileInfoWrapper
-    {
-        public DateTime CreationTime => new DateTime();
-    }
+    public DateTime CreationTime => new ();
 }

@@ -1,12 +1,11 @@
 ﻿using EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Factories
+namespace EBookPresenter.Factories;
+
+public class FileInfoFactory : IFileInfoFactory
 {
-    public class FileInfoFactory : IFileInfoFactory
+    public IFileInfoWrapper Create(string path)
     {
-        public IFileInfoWrapper Create(string path)
-        {
-            return new FileInfoWrapper(path);
-        }
+        return new FileInfoWrapper(path);
     }
 }

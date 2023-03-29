@@ -1,58 +1,57 @@
 using System;
+using System.Collections.Generic;
+
 using EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Tests.Fakes
+namespace EBookPresenter.Tests.Fakes;
+
+public class FileSystemFake : IFileSystem
 {
-    public class FileSystemFake : IFileSystem
+    private static int folderCount;
+
+    public IEnumerable<string> GetDirectories(string path)
     {
-        private static int folderCount;
-
-        public string[] GetDirectories(string path)
+        var directoriesToReturn = folderCount switch
         {
-            string[] directoriesToReturn;
-
-            switch (folderCount)
+            0 => new[]
             {
-                case 0:
-                    directoriesToReturn = new[] {"folder1", "folder2", "folder3"};
-                    break;
-                case 1:
-                    directoriesToReturn = new[] {"folder4"};
-                    break;
-                default:
-                    directoriesToReturn = Array.Empty<string>();
-                    break;
-            }
+                "folder1", "folder2", "folder3"
+            },
+            1 => new[]
+            {
+                "folder4"
+            },
+            _ => Array.Empty<string>()
+        };
 
-            folderCount += 1;
-            
-            return directoriesToReturn;
-        }
+        folderCount += 1;
 
-        public string[] GetFiles(string path)
+        return directoriesToReturn;
+    }
+
+    public IEnumerable<string> GetFiles(string path)
+    {
+        var filesToReturn = folderCount switch
         {
-            string[] filesToReturn;
-
-            switch (folderCount)
+            1 => new[]
             {
-                case 1:
-                    filesToReturn = new[] {"file1.epub", "file2.epub", "file3.epub"};
-                    break;
-                case 2:
-                    filesToReturn = new[] {"file4.epub"};
-                    break;
-                case 3:
-                    filesToReturn = new[] {"file5.epub", "file6.epub"};
-                    break;
-                case 4:
-                    filesToReturn = new[] {"file7.epub", "file8.epub"};
-                    break;
-                default:
-                    filesToReturn = Array.Empty<string>();
-                    break;
-            }
-            
-            return filesToReturn;
-        }
+                "file1.epub", "file2.epub", "file3.epub"
+            },
+            2 => new[]
+            {
+                "file4.epub"
+            },
+            3 => new[]
+            {
+                "file5.epub", "file6.epub"
+            },
+            4 => new[]
+            {
+                "file7.epub", "file8.epub"
+            },
+            _ => Array.Empty<string>()
+        };
+
+        return filesToReturn;
     }
 }
