@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Wrappers
+public interface IFileInfoWrapper
 {
-    public interface IFileInfoWrapper
-    {
-        DateTime CreationTime { get; }
-    }
+    DateTime CreationTime { get; }
 }

@@ -1,8 +1,8 @@
-﻿namespace EBookPresenter.Wrappers
+﻿namespace EBookPresenter.Wrappers;
+
+public interface IFileSystem
 {
-    public interface IFileSystem
-    {
-        string[] GetDirectories(string path);
-        string[] GetFiles(string path);
-    }
+    IEnumerable<string> GetDirectories(string path);
+
+    IEnumerable<string> GetFiles(string path);
 }

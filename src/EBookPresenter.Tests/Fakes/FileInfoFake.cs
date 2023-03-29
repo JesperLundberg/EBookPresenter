@@ -1,13 +1,12 @@
 using EBookPresenter.Factories;
 using EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Tests.Fakes
+namespace EBookPresenter.Tests.Fakes;
+
+public class FileInfoFactoryFake : IFileInfoFactory
 {
-    public class FileInfoFactoryFake : IFileInfoFactory
+    public IFileInfoWrapper Create(string path)
     {
-        public IFileInfoWrapper Create(string path)
-        {
-            return new FileInfoWrapperFake();
-        }
+        return new FileInfoWrapperFake();
     }
 }

@@ -1,29 +1,28 @@
-using EBookPresenter.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EBookPresenter.Controllers
+namespace EBookPresenter.Controllers;
+
+public class SpecificEBookController : Controller
 {
-    public class SpecificEBookController : Controller
+    public IActionResult Index(string path)
     {
-        public IActionResult Index(string path)
+        var viewModel = new SpecificEBookViewModel
         {
-            var viewModel = new SpecificEBookViewModel
-            {
-                Path = path
-            };
+            Path = path
+        };
 
-            return View(viewModel);
-        }
+        return View(viewModel);
+    }
 
-        [HttpPost]
-        public PhysicalFileResult GetBook(SpecificEBookViewModel eBookViewModel)
+    [HttpPost]
+    public PhysicalFileResult GetBook(SpecificEBookViewModel eBookViewModel)
+    {
+        var fileToReturn = new PhysicalFileResult(eBookViewModel.Path,
+            "application/text")
         {
-             var fileToReturn = new PhysicalFileResult(eBookViewModel.Path, "application/text")
-            {
-                FileDownloadName = eBookViewModel.Title
-            };
+            FileDownloadName = eBookViewModel.Title
+        };
 
-            return fileToReturn;
-        }
+        return fileToReturn;
     }
 }

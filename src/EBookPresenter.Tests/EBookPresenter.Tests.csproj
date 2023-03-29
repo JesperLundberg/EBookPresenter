@@ -4,6 +4,8 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <LangVersion>latestmajor</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EBookPresenter\EBookPresenter.csproj" />
+        <ProjectReference Include="..\EBookPresenter\EBookPresenter.csproj" />
     </ItemGroup>
 
 </Project>

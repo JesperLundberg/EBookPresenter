@@ -1,17 +1,14 @@
-﻿using System.IO;
+﻿namespace EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Wrappers
+public class FileSystem : IFileSystem
 {
-    public class FileSystem : IFileSystem
+    public IEnumerable<string> GetDirectories(string path)
     {
-        public string[] GetDirectories(string path)
-        {
-            return Directory.GetDirectories(path);
-        }
+        return Directory.GetDirectories(path);
+    }
 
-        public string[] GetFiles(string path)
-        {
-            return Directory.GetFiles(path);
-        }
+    public IEnumerable<string> GetFiles(string path)
+    {
+        return Directory.GetFiles(path);
     }
 }

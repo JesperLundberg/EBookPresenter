@@ -1,9 +1,8 @@
 ﻿using EBookPresenter.Wrappers;
 
-namespace EBookPresenter.Factories
+namespace EBookPresenter.Factories;
+
+public interface IFileInfoFactory
 {
-    public interface IFileInfoFactory
-    {
-        IFileInfoWrapper Create(string path);
-    }
+    IFileInfoWrapper Create(string path);
 }

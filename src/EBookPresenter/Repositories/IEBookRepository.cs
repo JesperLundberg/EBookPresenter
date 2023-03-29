@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using EBookPresenter.Models;
+namespace EBookPresenter.Repositories;
 
-namespace EBookPresenter.Repositories
+public interface IEBookRepository
 {
-    public interface IEBookRepository
-    {
-        IEnumerable<EBook> GetAllEbooks(string folderToRead, string sortOrder);
-    }
+    IEnumerable<EBook> GetAllEbooks(string folderToRead,
+        string sortOrder);
 }
