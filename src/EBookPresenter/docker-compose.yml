@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+    site:
+        container_name: "ebookpresenter"
+        image: "ebookpresenter"
+        ports:
+            - 5000:80
+        build: .
+        volumes:
+          - /tmp:/books:rw
