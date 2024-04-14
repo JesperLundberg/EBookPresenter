@@ -3,19 +3,13 @@ using EBookPresenter.Wrappers;
 
 namespace EBookPresenter.Repositories;
 
-public class EBookRepository : IEBookRepository
+public class EBookRepository(IFileSystem fileSystem, IFileInfoFactory fileInfoFactory)
+    : IEBookRepository
 {
-    public EBookRepository(IFileSystem fileSystem,
-        IFileInfoFactory fileInfoFactory)
-    {
-        FileSystem = fileSystem;
-        FileInfoFactory = fileInfoFactory;
-    }
-    private IFileSystem FileSystem { get; }
-    private IFileInfoFactory FileInfoFactory { get; }
+    private IFileSystem FileSystem { get; } = fileSystem;
+    private IFileInfoFactory FileInfoFactory { get; } = fileInfoFactory;
 
-    public IEnumerable<EBook> GetAllEbooks(string folderToRead,
-        string sortOrder)
+    public IEnumerable<EBook> GetAllEbooks(string folderToRead, string sortOrder)
     {
         var allFiles = GetEbooksRecursive(folderToRead);
 
@@ -24,25 +18,24 @@ public class EBookRepository : IEBookRepository
         foreach (var file in allFiles)
         {
             // Change from back slash to front slash as Linux uses the latter and Windows is agnostic
-            var fixedString = string.IsNullOrEmpty(file) ? string.Empty : file.Replace('\\',
-                '/');
+            var fixedString = string.IsNullOrEmpty(file) ? string.Empty : file.Replace('\\', '/');
 
             var fileInfo = FileInfoFactory.Create(fixedString);
 
-            ebooks.Add(new ()
-            {
-                Title = Path.GetFileName(file),
-                Path = fixedString,
-                CreatedDate = fileInfo.CreationTime
-            });
+            ebooks.Add(
+                new()
+                {
+                    Title = Path.GetFileName(file),
+                    Path = fixedString,
+                    CreatedDate = fileInfo.CreationTime
+                }
+            );
         }
 
-        return OrderBooks(ebooks,
-            sortOrder);
+        return OrderBooks(ebooks, sortOrder);
     }
 
-    public IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks,
-        string sortOrder)
+    public IEnumerable<EBook> OrderBooks(IEnumerable<EBook> ebooks, string sortOrder)
     {
         return sortOrder switch
         {
@@ -61,7 +54,10 @@ public class EBookRepository : IEBookRepository
 
         var directories = FileSystem.GetDirectories(folder);
 
-        var files = FileSystem.GetFiles(folder).Where(x => x.EndsWith(".epub") || x.EndsWith(".cbz")).ToList();
+        var files = FileSystem
+            .GetFiles(folder)
+            .Where(x => x.EndsWith(".epub") || x.EndsWith(".cbz"))
+            .ToList();
 
         foreach (var directory in directories)
         {
