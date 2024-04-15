@@ -1,12 +1,8 @@
-﻿namespace EBookPresenter.Wrappers;
+namespace EBookPresenter.Wrappers;
 
-public class FileInfoWrapper : IFileInfoWrapper
+public class FileInfoWrapper(string path) : IFileInfoWrapper
 {
-    public FileInfoWrapper(string path)
-    {
-        FileInfo = new (path);
-    }
-    private FileInfo FileInfo { get; }
+    private FileInfo FileInfo { get; } = new(path);
 
     public DateTime CreationTime => FileInfo.CreationTime;
 }
