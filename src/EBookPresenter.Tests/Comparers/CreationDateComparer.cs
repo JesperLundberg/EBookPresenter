@@ -1,15 +1,13 @@
 #nullable enable
 using System;
 using System.Collections;
-
 using EBookPresenter.Models;
 
 namespace EBookPresenter.Tests.Comparers;
 
 public class CreationDateComparer : IComparer
 {
-    public int Compare(object? x,
-        object? y)
+    public int Compare(object? x, object? y)
     {
         if (x is not EBook book1 || y is not EBook book2)
         {

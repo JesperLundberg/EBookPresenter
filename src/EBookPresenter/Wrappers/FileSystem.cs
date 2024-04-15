@@ -1,4 +1,4 @@
-﻿namespace EBookPresenter.Wrappers;
+namespace EBookPresenter.Wrappers;
 
 public class FileSystem : IFileSystem
 {
