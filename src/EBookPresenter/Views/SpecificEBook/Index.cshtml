@@ -4,13 +4,15 @@
     ViewData["Title"] = "EBook Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@Model.Title</h1>
+<h1>@Model.Title</h1>
 
-    <form asp-action="GetBook">
-        <input asp-for="Path" value="@Model.Path" placeholder="@Model.Path" readonly="readonly" hidden="hidden"/>
-        <br/>
-        <input type="submit" value="Get book" class="btn btn-sm btn-success text-uppercase rounded-0"/>
-    </form>
+<form asp-action="GetBook">
+    <input asp-for="Path" value="@Model.Path" readonly="readonly" hidden="hidden"/>
+    <p>
+        <input type="submit" value="Get book"/>
+    </p>
+</form>
 
-</div>
+<p>
+    <a asp-controller="Home" asp-action="Index">Back to list</a>
+</p>
