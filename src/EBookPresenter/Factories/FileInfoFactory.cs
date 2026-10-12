@@ -1,4 +1,4 @@
-﻿using EBookPresenter.Wrappers;
+using EBookPresenter.Wrappers;
 
 namespace EBookPresenter.Factories;
 

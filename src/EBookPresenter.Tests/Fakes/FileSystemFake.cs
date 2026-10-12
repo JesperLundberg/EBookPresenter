@@ -1,40 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using EBookPresenter.Wrappers;
 
 namespace EBookPresenter.Tests.Fakes;
 
 public class FileSystemFake : IFileSystem
 {
-    private static int folderCount;
+    private static readonly Dictionary<string, string[]> _directories = new()
+    {
+        ["folderDoesntMatter/"] = ["folder1", "folder2", "folder3"],
+        ["folderDoesntMatter/folder1"] = ["folder4"],
+        ["folderDoesntMatter/folder2"] = [],
+        ["folderDoesntMatter/folder3"] = [],
+        ["folderDoesntMatter/folder1/folder4"] = [],
+    };
+
+    private static readonly Dictionary<string, string[]> _files = new()
+    {
+        ["folderDoesntMatter/"] = [],
+        ["folderDoesntMatter/folder1"] = ["file1.epub", "file2.epub", "file3.epub"],
+        ["folderDoesntMatter/folder2"] = ["file4.epub"],
+        ["folderDoesntMatter/folder3"] = ["file5.epub", "file6.epub"],
+        ["folderDoesntMatter/folder1/folder4"] = ["file7.epub", "file8.epub"],
+    };
+
+    public bool DirectoryExists(string path)
+    {
+        return true;
+    }
 
     public IEnumerable<string> GetDirectories(string path)
     {
-        var directoriesToReturn = folderCount switch
-        {
-            0 => ["folder1", "folder2", "folder3"],
-            1 => ["folder4"],
-            _ => Array.Empty<string>()
-        };
-
-        folderCount += 1;
-
-        return directoriesToReturn;
+        return _directories.TryGetValue(path, out var directories)
+            ? directories.Select(d => Path.Combine(path, d))
+            : [];
     }
 
     public IEnumerable<string> GetFiles(string path)
     {
-        var filesToReturn = folderCount switch
-        {
-            1 => ["file1.epub", "file2.epub", "file3.epub"],
-            2 => ["file4.epub"],
-            3 => ["file5.epub", "file6.epub"],
-            4 => ["file7.epub", "file8.epub"],
-            _ => Enumerable.Empty<string>()
-        };
-
-        return filesToReturn;
+        return _files.TryGetValue(path, out var files) ? files : [];
     }
 }
-

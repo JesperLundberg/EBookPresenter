@@ -2,6 +2,11 @@ namespace EBookPresenter.Wrappers;
 
 public class FileSystem : IFileSystem
 {
+    public bool DirectoryExists(string path)
+    {
+        return Directory.Exists(path);
+    }
+
     public IEnumerable<string> GetDirectories(string path)
     {
         if (Directory.Exists(path))

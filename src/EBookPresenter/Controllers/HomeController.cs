@@ -1,9 +1,6 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using EBookPresenter.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace EBookPresenter.Controllers;
 
@@ -24,10 +21,16 @@ public class HomeController(
 
         var folderToRead = Configuration.GetSection("AppSettings").GetSection("FolderToRead").Value;
 
+        if (string.IsNullOrEmpty(folderToRead))
+        {
+            Logger.LogError("AppSettings:FolderToRead is not configured");
+            return Problem("EBook folder is not configured.");
+        }
+
         var viewModel = new EBookViewModel
         {
             EBooks = EBookRepository.GetAllEbooks(folderToRead, sortOrder),
-            SortOrder = sortOrder
+            SortOrder = sortOrder,
         };
 
         return View(viewModel);
@@ -52,9 +55,9 @@ public class HomeController(
         return RedirectToAction("Index");
     }
 
-    private void SetCookie(string key, string value, int? expireTimeDays)
+    private void SetCookie(string key, string value, int expireTimeDays)
     {
-        var option = new CookieOptions { Expires = DateTime.Now.AddDays(expireTimeDays ?? 10) };
+        var option = new CookieOptions { Expires = DateTime.Now.AddDays(expireTimeDays) };
 
         Response.Cookies.Append(key, value, option);
     }

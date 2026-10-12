@@ -18,7 +18,7 @@ public class EBookRepository(IFileSystem fileSystem, IFileInfoFactory fileInfoFa
         foreach (var file in allFiles)
         {
             // Change from back slash to front slash as Linux uses the latter and Windows is agnostic
-            var fixedString = string.IsNullOrEmpty(file) ? string.Empty : file.Replace('\\', '/');
+            var fixedString = file.Replace('\\', '/');
 
             var fileInfo = FileInfoFactory.Create(fixedString);
 
@@ -27,7 +27,7 @@ public class EBookRepository(IFileSystem fileSystem, IFileInfoFactory fileInfoFa
                 {
                     Title = Path.GetFileName(file),
                     Path = fixedString,
-                    CreatedDate = fileInfo.CreationTime
+                    CreatedDate = fileInfo.CreationTime,
                 }
             );
         }
@@ -41,15 +41,15 @@ public class EBookRepository(IFileSystem fileSystem, IFileInfoFactory fileInfoFa
         {
             "creation" => ebooks.OrderByDescending(x => x.CreatedDate),
             "alphabetic" => ebooks.OrderBy(x => x.Title),
-            _ => ebooks.OrderBy(x => x.Title)
+            _ => ebooks.OrderBy(x => x.Title),
         };
     }
 
     public IEnumerable<string> GetEbooksRecursive(string folder)
     {
-        if (string.IsNullOrEmpty(folder))
+        if (string.IsNullOrEmpty(folder) || !FileSystem.DirectoryExists(folder))
         {
-            return new List<string>();
+            return [];
         }
 
         var directories = FileSystem.GetDirectories(folder);
